@@ -1,0 +1,61 @@
+.tabs-container {
+  padding: 0 20rpx;
+}
+.tabs-container .tab-plane {
+  font-size: 28rpx;
+  margin: 0 20rpx;
+}
+.tabs-container .tab-plane.tab-selected {
+  color: #b6090d;
+}
+
+.bg-tool-container .bg-tool-content {
+  white-space: nowrap;
+  width: 100%;
+}
+.bg-tool-container .bg-tool-content .bg-img {
+  display: inline-block;
+  width: 120rpx;
+  height: 180rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-right: 20rpx;
+  border-radius: 20rpx;
+}
+.bg-tool-container .bg-tool-content .bg-img-selected {
+  border: 6rpx solid #fff;
+}
+
+.pendant-container .pendant-scroll {
+  white-space: nowrap;
+  width: 100%;
+}
+.pendant-container .pendant-scroll .icon-box {
+  margin-bottom: 20rpx;
+}
+.pendant-container .pendant-scroll .icon-box .pendant-icon {
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+.pendant-container .pendant-scroll .icon-box .pendant-icon:last-child {
+  margin-right: 0;
+}
+
+.home-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.home-container .tools-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+.home-container .tools-container .tools-content {
+  height: 220rpx;
+  padding: 20rpx 40rpx 0;
+}
