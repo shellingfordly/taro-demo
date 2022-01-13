@@ -15,8 +15,8 @@
 }
 .bg-tool-container .bg-tool-content .bg-img {
   display: inline-block;
-  width: 120rpx;
-  height: 180rpx;
+  width: 100rpx;
+  height: 160rpx;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin-right: 20rpx;
@@ -34,28 +34,82 @@
   margin-bottom: 20rpx;
 }
 .pendant-container .pendant-scroll .icon-box .pendant-icon {
-  width: 80rpx;
-  height: 80rpx;
+  width: 70rpx;
+  height: 60rpx;
   margin-right: 20rpx;
 }
 .pendant-container .pendant-scroll .icon-box .pendant-icon:last-child {
   margin-right: 0;
 }
 
+.textedit-container .textedit-scroll {
+  white-space: nowrap;
+  width: 100%;
+  font-size: 24rpx;
+}
+.textedit-container .textedit-scroll .setting-box {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 20rpx;
+}
+.textedit-container .textedit-scroll .setting-box .title {
+  margin-right: 20rpx;
+}
+.textedit-container .textedit-scroll .setting-box .colors {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.textedit-container .textedit-scroll .setting-box .colors view {
+  margin-right: 16rpx;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 8rpx;
+  background-color: #888;
+}
+
 .home-container {
+  position: relative;
+}
+.home-container .canvas {
   position: relative;
   width: 100vw;
   height: 100vh;
+}
+.home-container .canvas .move-box {
+  position: relative;
+  width: 60rpx;
+  height: 60rpx;
+}
+.home-container .canvas .text-container-0,
+.home-container .canvas .text-container-1 {
+  position: relative;
+  left: 50%;
+  width: 80rpx;
+  height: 400rpx;
+  color: #000;
+  font-size: 80rpx;
+  font-weight: bold;
+  text-shadow: black 8rpx 8rpx 16rpx;
+}
+.home-container .canvas .text-container-0 {
+  top: 220rpx;
+  margin-left: 50rpx;
+}
+.home-container .canvas .text-container-1 {
+  top: 380rpx;
+  margin-left: -250rpx;
 }
 .home-container .tools-container {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100vw;
-  background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .home-container .tools-container .tools-content {
-  height: 220rpx;
+  height: 180rpx;
   padding: 20rpx 40rpx 0;
 }

@@ -34,8 +34,8 @@ function onClick(src: string, index: number) {
 
     .bg-img {
       display: inline-block;
-      width: 60px;
-      height: 90px;
+      width: 50px;
+      height: 80px;
       box-sizing: border-box;
       margin-right: 10px;
       border-radius: 10px;
