@@ -1,5 +1,8 @@
 <template>
-  <view class="home-container" :style="{ width, height }">
+  <view
+    class="home-container"
+    :style="{ width: width + 'px', height: height + 'px' }"
+  >
     <view class="head-container">
       <view class="change" @click="onChangeTextList">换一句</view>
       <view class="preview" @click="onPreview">预览</view>
@@ -39,13 +42,16 @@ import TextEdit from "./components/TextEdit.vue";
 import { bgList } from "./components/constants";
 import { getSystemInfoSync } from "@tarojs/taro";
 
-const { screenWidth: width, screenHeight: height } = getSystemInfoSync();
+const { windowWidth: width, windowHeight: height } = getSystemInfoSync();
 const activeKey = ref(0);
 const imgList = reactive(new Array(12).fill(""));
 const imgUrl = ref(bgList[0]);
 const canvasStyle = computed<CSSProperties>(() => ({
+  width: width + "px",
+  height: height + "px",
   backgroundImage: `url('${imgUrl.value}')`,
   backgroundSize: `${width}px ${height}px`,
+  backgroundPosition: "0 0",
 }));
 const textList = ref(randomText());
 const textStyle = reactive<CSSProperties>({});
@@ -81,20 +87,20 @@ function onAddPendant(src: string) {
   iconUrl.value = src;
 }
 
-function onChangeText({ hasShadow, textColor, shadowColor }: any) {
+function onChangeText({ hasShadow, textColor, shadowColor, textSize }: any) {
   if (hasShadow) {
     textStyle.textShadow = `${shadowColor} 3px 3px 8px`;
   } else {
     textStyle.textShadow = "none";
   }
   textStyle.color = textColor;
+  textStyle.fontSize = textStyle.width = textSize;
 }
 </script>
 
 <style lang="scss">
 .home-container {
   position: relative;
-  height: 100%;
   overflow: hidden;
 
   .head-container {
@@ -128,8 +134,6 @@ function onChangeText({ hasShadow, textColor, shadowColor }: any) {
 
   .canvas {
     position: relative;
-    width: 100vw;
-    height: 100vh;
 
     .move-box {
       position: relative;
@@ -143,9 +147,8 @@ function onChangeText({ hasShadow, textColor, shadowColor }: any) {
       top: 100px;
       left: 50%;
       width: 40px;
-      height: 200px;
-      color: #000;
       font-size: 40px;
+      color: #000;
       font-weight: bold;
       text-shadow: black 3px 3px 8px;
     }
@@ -163,7 +166,7 @@ function onChangeText({ hasShadow, textColor, shadowColor }: any) {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     color: #fff;
     background-color: rgb(0, 0, 0, 0.4);
     transition: all 0.3s linear;
