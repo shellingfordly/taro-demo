@@ -17,6 +17,7 @@
     "build:rn": "taro build --type rn",
     "build:qq": "taro build --type qq",
     "build:quickapp": "taro build --type quickapp",
+    "pro:weapp": "set NODE_ENV=production && taro build --type weapp --watch",
     "dev:weapp": "npm run build:weapp -- --watch",
     "dev:swan": "npm run build:swan -- --watch",
     "dev:alipay": "npm run build:alipay -- --watch",
@@ -40,10 +41,7 @@
     "@tarojs/plugin-html": "3.3.19",
     "@tarojs/runtime": "3.3.19",
     "@tarojs/taro": "3.3.19",
-    "@types/fabric": "^4.5.6",
-    "fabric": "^4.6.0",
-    "vue": "^3.0.0",
-    "wxml2canvas": "^1.0.1"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",

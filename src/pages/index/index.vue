@@ -1,15 +1,20 @@
 <template>
-  <view class="home-container">
+  <view class="home-container" :style="{ width, height }">
+    <view class="head-container">
+      <view class="change" @click="onChangeTextList">换一句</view>
+      <view class="preview" @click="onPreview">预览</view>
+    </view>
     <movable-area class="canvas" :style="canvasStyle">
       <movable-view
         :class="[`text-container-${i}`]"
         v-for="(text, i) in textList"
         direction="all"
+        :style="textStyle"
       >
         {{ text }}
       </movable-view>
     </movable-area>
-    <view class="tools-container">
+    <view :class="toolsClass">
       <Tab v-model="activeKey" :list="tabList" />
       <view class="tools-content">
         <BgSelect v-if="activeKey === TabKey.Bg" @onChange="onChangeBg" />
@@ -17,33 +22,53 @@
           v-else-if="activeKey === TabKey.Pendant"
           @addPendant="onAddPendant"
         />
-        <TextEdit v-else />
+        <TextEdit v-else @on-change="onChangeText" />
       </view>
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
-import { CSSProperties, computed, ref, onMounted, reactive } from "vue";
+import { CSSProperties, computed, ref, reactive } from "vue";
 import Tab from "../../components/tab/Tab.vue";
 import { TabKey, tabList } from "./constans";
 import BgSelect from "./components/BgSelect.vue";
 import Pendant from "./components/Pendant.vue";
-// import { WordList } from "../../data/data";
+import { WordList } from "../../data/data";
 import TextEdit from "./components/TextEdit.vue";
+import { bgList } from "./components/constants";
+import { getSystemInfoSync } from "@tarojs/taro";
 
-const activeKey = ref(2);
+const { screenWidth: width, screenHeight: height } = getSystemInfoSync();
+const activeKey = ref(0);
 const imgList = reactive(new Array(12).fill(""));
-const imgUrl = ref(require("/src/assets/bg_0.png"));
+const imgUrl = ref(bgList[0]);
 const canvasStyle = computed<CSSProperties>(() => ({
-  // backgroundImage: `url('${imgUrl.value}')`,
-  backgroundSize: "cover",
+  backgroundImage: `url('${imgUrl.value}')`,
+  backgroundSize: `${width}px ${height}px`,
 }));
-const textList = ref([randomText(), randomText()]);
+const textList = ref(randomText());
+const textStyle = reactive<CSSProperties>({});
+const iconUrl = ref("");
+const isPreview = ref(false);
+const toolsClass = computed(() => {
+  let classname = "";
+  if (isPreview.value) {
+    classname = "tools-none";
+  } else classname = "";
+  return ["tools-container", classname];
+});
 
 function randomText() {
-  // return WordList[Math.floor(Math.random() * WordList.length)];
-  return "";
+  return WordList[Math.floor(Math.random() * WordList.length)];
+}
+
+function onChangeTextList() {
+  textList.value = randomText();
+}
+
+function onPreview() {
+  isPreview.value = !isPreview.value;
 }
 
 function onChangeBg(url: string) {
@@ -53,14 +78,53 @@ function onChangeBg(url: string) {
 function onAddPendant(src: string) {
   const index = imgList.findIndex((v) => !v);
   imgList[index] = src;
+  iconUrl.value = src;
 }
 
-onMounted(() => {});
+function onChangeText({ hasShadow, textColor, shadowColor }: any) {
+  if (hasShadow) {
+    textStyle.textShadow = `${shadowColor} 3px 3px 8px`;
+  } else {
+    textStyle.textShadow = "none";
+  }
+  textStyle.color = textColor;
+}
 </script>
 
 <style lang="scss">
 .home-container {
   position: relative;
+  height: 100%;
+  overflow: hidden;
+
+  .head-container {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+
+    .change,
+    .preview {
+      color: #fff;
+      border-radius: 4px;
+      line-height: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      background-color: rgb(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+
+    .change {
+      width: 60px;
+      margin-right: 10px;
+    }
+
+    .preview {
+      width: 40px;
+    }
+  }
 
   .canvas {
     position: relative;
@@ -76,22 +140,21 @@ onMounted(() => {});
     .text-container-0,
     .text-container-1 {
       position: relative;
+      top: 100px;
       left: 50%;
       width: 40px;
       height: 200px;
       color: #000;
       font-size: 40px;
       font-weight: bold;
-      text-shadow: black 4px 4px 8px;
+      text-shadow: black 3px 3px 8px;
     }
 
     .text-container-0 {
-      top: 110px;
       margin-left: 25px;
     }
 
     .text-container-1 {
-      top: 190px;
       margin-left: -125px;
     }
   }
@@ -103,11 +166,16 @@ onMounted(() => {});
     width: 100vw;
     color: #fff;
     background-color: rgb(0, 0, 0, 0.4);
+    transition: all 0.3s linear;
 
     .tools-content {
-      height: 90px;
-      padding: 10px 20px 0;
+      height: 110px;
+      padding: 0 20px;
     }
+  }
+
+  .tools-none {
+    bottom: -140px;
   }
 }
 </style>

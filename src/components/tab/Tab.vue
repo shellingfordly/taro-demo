@@ -34,12 +34,12 @@ function onClick(val: number) {
 
 <style lang="less">
 .tabs-container {
-  padding: 0 10px;
+  padding: 10px;
 
   .tab-plane {
-    font-size: 14px;
     margin: 0 10px;
     cursor: pointer;
+    font-size: 16px;
 
     &.tab-selected {
       color: rgb(182, 9, 13);
